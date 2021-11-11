@@ -1,7 +1,9 @@
 package com.uri.projeto_de_software.casodeuso.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Categoria implements Serializable {
+public class Estado implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,12 +25,13 @@ public class Categoria implements Serializable {
 
     private String nome;
 
-    @ManyToMany(mappedBy = "categorias")
-    @JsonManagedReference
-    private List<Produto> produtos;
+    @OneToMany(mappedBy = "estado", cascade=CascadeType.PERSIST)
+    private List<Cidade> cidades;
 
-    public Categoria(String nome){
+    public Estado(String nome, Double preco){
         this.nome = nome;
-        this.produtos = new ArrayList<>();
+        this.cidades = new ArrayList<>();
     }
+
+
 }
