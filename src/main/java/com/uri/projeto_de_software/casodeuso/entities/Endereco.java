@@ -1,5 +1,6 @@
 package com.uri.projeto_de_software.casodeuso.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,5 +34,19 @@ public class Endereco implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonBackReference
     private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "cidade_id")
+    @JsonBackReference
+    private Cidade cidade;
+
+    public Endereco(String logradouro, String numero, String complemento, String bairro, String cep){
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cep = cep;
+    }
 }

@@ -1,5 +1,6 @@
 package com.uri.projeto_de_software.casodeuso.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,9 +27,10 @@ public class Estado implements Serializable {
     private String nome;
 
     @OneToMany(mappedBy = "estado", cascade=CascadeType.PERSIST)
+    @JsonManagedReference
     private List<Cidade> cidades;
 
-    public Estado(String nome, Double preco){
+    public Estado(String nome){
         this.nome = nome;
         this.cidades = new ArrayList<>();
     }
