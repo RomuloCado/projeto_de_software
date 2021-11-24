@@ -41,6 +41,10 @@ public class Cliente implements Serializable {
     @JsonManagedReference
     private List<Telefone> telefones;
 
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
+    private List<Pedido> pedidos;
+
     public Cliente (String nome, String email, TipoCliente tipoCliente, String cpfOuCnpj){
         this.nome = nome;
         this.email = email;
@@ -48,6 +52,7 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.enderecos = new ArrayList<>();
         this.telefones = new ArrayList<>();
+        this.pedidos = new ArrayList<>();
     }
 
 }
