@@ -11,9 +11,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -29,7 +29,7 @@ public class Cidade implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "estado_id")
-    @JsonBackReference
+    @JsonManagedReference
     private Estado estado;
 
     @OneToMany(mappedBy = "cidade")
@@ -39,5 +39,22 @@ public class Cidade implements Serializable {
     public Cidade(String nome){
         this.nome = nome;
         this.enderecos = new ArrayList<>();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cidade other = (Cidade) obj;
+        return Objects.equals(id, other.id);
     }
 }

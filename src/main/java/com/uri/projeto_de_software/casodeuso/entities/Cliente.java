@@ -1,5 +1,6 @@
 package com.uri.projeto_de_software.casodeuso.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.uri.projeto_de_software.casodeuso.constants.TipoCliente;
 import lombok.AllArgsConstructor;
@@ -11,9 +12,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -42,7 +43,7 @@ public class Cliente implements Serializable {
     private List<Telefone> telefones;
 
     @OneToMany(mappedBy = "cliente")
-    @JsonManagedReference
+    @JsonBackReference
     private List<Pedido> pedidos;
 
     public Cliente (String nome, String email, TipoCliente tipoCliente, String cpfOuCnpj){
@@ -53,6 +54,23 @@ public class Cliente implements Serializable {
         this.enderecos = new ArrayList<>();
         this.telefones = new ArrayList<>();
         this.pedidos = new ArrayList<>();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cliente other = (Cliente) obj;
+        return Objects.equals(id, other.id);
     }
 
 }
